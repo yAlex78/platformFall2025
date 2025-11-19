@@ -13,6 +13,18 @@ export async function getTodo(client: MongoClient, id: string) {
 }
 
 /**
+ * Get a todo from the database
+ * @param client: The MongoClient object
+ * @param id: ID of the todo to get
+ * @returns: An object representing the todo
+ */
+export async function getAllTodos(client: MongoClient) {
+    const collection = client.db("todos").collection("todos");
+    const todos = await collection.find({}).toArray();
+    return todos;
+}
+
+/**
  * Create a new todo in the database.
  * @param client: The MongoClient object.
  * @param title: The title of the new todo.

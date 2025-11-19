@@ -41,11 +41,11 @@ export default function TaskCard({ todo, refresh }: Props) {
                     <p>{todo.desc}</p>
                     <span className={styles.date}>{todo.dueDate}</span>
           </div>
-            </div>
+          </div>
             <div className={styles.icons}>
                 <button className={styles.edit}>Edit Todo</button>
                 <button className={styles.delete} onClick={handleDelete}>Delete Todo</button>
-            </div>
+          </div>
       </div>
     );
 }

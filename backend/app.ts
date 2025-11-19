@@ -6,7 +6,6 @@ import { loadEnvFile } from "node:process";
 import todosRouter from "./routes/todosRouter.ts";
 
 loadEnvFile('./.env');
-console.log("[" + process.env.MONGO_URI + "]");
 
 const app: Application = express();
 app.use(cors());

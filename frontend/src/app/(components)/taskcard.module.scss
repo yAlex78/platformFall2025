@@ -25,6 +25,8 @@
 
 .icons {
     display: flex;
+    flex-direction: column;
+    margin: auto;
     gap: 10px;
 
     button {

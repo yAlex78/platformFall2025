@@ -25,18 +25,40 @@ export default function TodosPage() {
   useEffect(() => {
     refresh();
   }, []);
+  
+  const completedTodos = todos.filter((todo) => todo.completed);
+  const incompleteTodos = todos.filter((todo) => !todo.completed);
 
+  console.log("All todos:", todos);
+  console.log("Completed todos:", completedTodos);
+  console.log("Incomplete todos:", incompleteTodos);
+  
   return (
     <div className={styles.container}>
       <div className={styles.left}>
         <h2>All Tasks</h2>
-        <p className={styles.section}>COMPLETED</p>
+        <div className={styles.section}>COMPLETED</div>
+        <div>
+          {completedTodos.length ? (
+            completedTodos.map((todo) => (
+              <TaskCard key={todo._id} todo={todo} refresh={refresh} />
+            ))
+          ) : (
+            <p>No completed tasks</p>
+          )}
+        </div>
 
         <div className={styles.section}>INCOMPLETE</div>
 
-        {todos.map((todo) => (
-          <TaskCard key={todo._id} todo={todo} refresh={refresh} />
-        ))}
+        <div>
+          {incompleteTodos.length ? (
+            incompleteTodos.map((todo) => (
+              <TaskCard key={todo._id} todo={todo} refresh={refresh} />
+            ))
+          ) : (
+            <p>No incomplete tasks</p>
+          )}
+        </div>
       </div>
 
       <div className={styles.right}>
