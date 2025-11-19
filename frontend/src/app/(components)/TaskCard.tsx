@@ -41,7 +41,7 @@ export default function TaskCard({ todo, refresh }: Props) {
             checked={todo.completed}
             onChange={handleCheck}
           />
-          <div>
+          <div className={styles.todoInfo}>
             <h3>{todo.title}</h3>
                     <p>{todo.desc}</p>
                     <span className={styles.date}>{todo.dueDate}</span>

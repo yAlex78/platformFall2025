@@ -6,11 +6,24 @@
     border-radius: 12px;
     margin-bottom: 15px;
     background: white;
+    gap: 14px;
 }
 
 .left {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 18px;
+}
+
+.todoInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    h3, p, span {
+        margin: 0; 
+        padding: 0; 
+    }
 }
 
 .date {
@@ -28,12 +41,14 @@
     flex-direction: column;
     margin: auto;
     gap: 10px;
+    align-items: center;
 
     button {
         background: none;
-        border: none;
+        border: 1px solid #ddd;
+        border-radius: 6px;
         cursor: pointer;
-        font-size: 18px;
+        font-size: 14px;
 
         &.delete {
             color: rgb(111, 30, 30);
