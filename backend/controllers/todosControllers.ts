@@ -10,10 +10,16 @@ export const getAllTodosController = async (req: Request, res: Response) => {
       data: todos,
     });
   } catch (e: unknown) {
-    if (e instanceof Error) {
-      res.status(500).json({ success: false, message: e.message });
+    if (e instanceof Error){
+        res.status(400).json({
+            success: false,
+            message: e.message,
+        });
     } else {
-      res.status(500).json({ success: false, message: "Unknown error" });
+        res.status(400).json({
+            success: false,
+            message: "couldn't get error message",
+        });
     }
   }
 };

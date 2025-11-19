@@ -19,7 +19,12 @@ interface Props {
 
 export default function TaskCard({ todo, refresh }: Props) {
     async function handleCheck(e: React.ChangeEvent<HTMLInputElement>) {
-        await updateTodo(todo._id, { completed: e.target.checked });
+        await updateTodo(todo._id, { 
+          title: todo.title,
+          desc: todo.desc,
+          dueDate: todo.dueDate,
+          completed: e.target.checked 
+        });
         refresh();
     }
     
