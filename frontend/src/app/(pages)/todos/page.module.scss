@@ -1,0 +1,23 @@
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px;
+}
+
+.left {
+  width: 380px;
+}
+
+.right {
+  width: 380px;
+}
+
+.section {
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #777;
+}
