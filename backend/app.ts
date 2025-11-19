@@ -20,7 +20,7 @@ setupClient();
 
 app.use("/todos", todosRouter);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`);
 });
