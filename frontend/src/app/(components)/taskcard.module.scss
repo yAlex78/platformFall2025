@@ -7,12 +7,15 @@
     margin-bottom: 15px;
     background: white;
     gap: 14px;
+    min-height: 80px;
+    align-items: center;
 }
 
 .left {
     display: flex;
     align-items: center;
     gap: 18px;
+    flex: 1;
 }
 
 .todoInfo {
@@ -41,7 +44,10 @@
     flex-direction: column;
     margin: auto;
     gap: 10px;
+    justify-content: center;
     align-items: center;
+    flex-shrink: 0;
+    width: 90px;
 
     button {
         background: none;
@@ -49,7 +55,13 @@
         border-radius: 6px;
         cursor: pointer;
         font-size: 14px;
+        width: 100%;
+        transition: background 0.2s ease;
 
+        &:hover {
+            background: #bcbcbc;
+        }
+        
         &.delete {
             color: rgb(111, 30, 30);
         }
