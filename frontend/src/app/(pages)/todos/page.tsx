@@ -37,7 +37,7 @@ export default function TodosPage() {
     <div className={styles.container}>
       <div className={styles.left}>
         <h2>All Tasks</h2>
-        <div className={styles.section}>COMPLETED</div>
+        <div className={styles.section}>COMPLETED ({completedTodos.length})</div>
         <div>
           {completedTodos.length ? (
             completedTodos.map((todo) => (
@@ -48,7 +48,7 @@ export default function TodosPage() {
           )}
         </div>
 
-        <div className={styles.section}>INCOMPLETE</div>
+        <div className={styles.section}>INCOMPLETE ({incompleteTodos.length})</div>
 
         <div>
           {incompleteTodos.length ? (
