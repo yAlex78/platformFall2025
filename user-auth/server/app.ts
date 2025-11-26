@@ -19,8 +19,8 @@ app.use(express.json());
 app.use(cors());
 
 async function setupClient() {
-    const client = await startMongoClient();
-    app.locals.client = client;
+  const client = await startMongoClient();
+  app.locals.client = client;
 }
 
 setupClient();
@@ -37,10 +37,10 @@ passport.use(
                 return done(null, false, { message: "user does not exist" });
             }
 
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (!isMatch) {
-                return done(null, false, { message: "incorrect password" });
-            }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+          return done(null, false, { message: "incorrect password" });
+        }
 
             return done(null, user);
         } catch (err) {
@@ -51,9 +51,14 @@ passport.use(
 
 // JWT strategy for protected routes
 passport.use(
-    new JWTStrategy({
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey   : 'your_jwt_secret'
+  new JWTStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey:
+        process.env.JWT_SECRET ||
+        (() => {
+          throw new Error("JWT_SECRET not set");
+        })(),
     },
     async function (jwtPayload, done) {
         try {
@@ -81,19 +86,26 @@ app.post('/log-in', (req: Request, res: Response) => {
             });
         }
 
-        req.login(user, {session: false}, (err) => {
-            if (err) {
-                res.send(err);
-            }
-            // generate a signed son web token with the contents of user object and return it in the response
-            const token = jwt.sign({ sub: user._id.toString() }, 'your_jwt_secret');
-            const return_user = {
-                username: user.username,
-                user_id: user._id,
-            }
-            return res.json({user: return_user, token});
-        });
-    })(req, res);
+      req.login(user, { session: false }, (err) => {
+        if (err) {
+          res.send(err);
+        }
+        // generate a signed son web token with the contents of user object and return it in the response
+        const token = jwt.sign(
+          { sub: user._id.toString() },
+          process.env.JWT_SECRET ||
+            (() => {
+              throw new Error("JWT_SECRET not set");
+            })(),
+        );
+        const return_user = {
+          username: user.username,
+          user_id: user._id,
+        };
+        return res.json({ user: return_user, token });
+      });
+    },
+  )(req, res);
 });
 
 // Protected routes
@@ -101,7 +113,7 @@ app.use("/users", passport.authenticate('jwt', {session: false}), usersRouter);
 app.use('/hello', passport.authenticate('jwt', {session: false}), helloRouter);
 
 // Start server
-const PORT = 3000;
+const PORT = 3003;
 app.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`);
+  console.log(`listening on port ${PORT}`);
 });
