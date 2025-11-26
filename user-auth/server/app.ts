@@ -1,13 +1,13 @@
 import express, { type Request, type Response } from "express";
 import type { Application } from "express";
 import { startMongoClient } from "./services/mongoService.ts";
-import 'dotenv/config'
+import "dotenv/config";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import bcrypt from "bcryptjs";
-import jwt from 'jsonwebtoken'
-import cors from 'cors';
+import jwt from "jsonwebtoken";
+import cors from "cors";
 import { getUserById, getUserByUsername } from "./services/usersService.ts";
 import usersRouter from "./routes/usersRouter.ts";
 import helloRouter from "./routes/helloRouter.ts";
@@ -30,23 +30,25 @@ app.use(passport.initialize());
 
 // Local strategy for username + password login
 passport.use(
-    new LocalStrategy(async (username: string, password: string, done: Function) => {
-        try {
-            const user = await getUserByUsername(app.locals.client, username);
-            if (!user) {
-                return done(null, false, { message: "user does not exist" });
-            }
+  new LocalStrategy(
+    async (username: string, password: string, done: Function) => {
+      try {
+        const user = await getUserByUsername(app.locals.client, username);
+        if (!user) {
+          return done(null, false, { message: "user does not exist" });
+        }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
           return done(null, false, { message: "incorrect password" });
         }
 
-            return done(null, user);
-        } catch (err) {
-            return done(err);
-        }
-    })
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
+    },
+  ),
 );
 
 // JWT strategy for protected routes
@@ -61,30 +63,36 @@ passport.use(
         })(),
     },
     async function (jwtPayload, done) {
-        try {
-            const user = await getUserById(app.locals.client, jwtPayload.sub);
-            if (!user) {
-                return done(null, false);
-            }
-            return done(null, user);
-        } catch (err) {
-            return done(err);
+      try {
+        const user = await getUserById(app.locals.client, jwtPayload.sub);
+        if (!user) {
+          return done(null, false);
         }
-    }
-));
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
+    },
+  ),
+);
 
 // Register (creates user)
-app.post("/register", (req: Request, res: Response) => createUserController(req, res));
+app.post("/register", (req: Request, res: Response) =>
+  createUserController(req, res),
+);
 
 // Log in
-app.post('/log-in', (req: Request, res: Response) => {
-    passport.authenticate("local", {session: false}, (err: Error, user: any) => {
-        if (err || !user) {
-            return res.status(400).json({
-                message: 'Something is not right',
-                user   : user
-            });
-        }
+app.post("/log-in", (req: Request, res: Response) => {
+  passport.authenticate(
+    "local",
+    { session: false },
+    (err: Error, user: any) => {
+      if (err || !user) {
+        return res.status(400).json({
+          message: "Something is not right",
+          user: user,
+        });
+      }
 
       req.login(user, { session: false }, (err) => {
         if (err) {
@@ -109,8 +117,16 @@ app.post('/log-in', (req: Request, res: Response) => {
 });
 
 // Protected routes
-app.use("/users", passport.authenticate('jwt', {session: false}), usersRouter);
-app.use('/hello', passport.authenticate('jwt', {session: false}), helloRouter);
+app.use(
+  "/users",
+  passport.authenticate("jwt", { session: false }),
+  usersRouter,
+);
+app.use(
+  "/hello",
+  passport.authenticate("jwt", { session: false }),
+  helloRouter,
+);
 
 // Start server
 const PORT = 3003;
