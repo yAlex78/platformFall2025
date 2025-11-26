@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
  * @returns An array containing all users in the database.
  */
 export async function getAllUsers(client: MongoClient) {
-    const users = client.db("cats").collection("users").find();
+    const users = client.db("todo_users").collection("users").find();
     return users.toArray();
 }
 
@@ -16,12 +16,12 @@ export async function getAllUsers(client: MongoClient) {
  * @returns An object representing the user.
  */
 export async function getUserById(client: MongoClient, id: string) {
-    const user = await client.db("cats").collection("users").findOne({ _id: new ObjectId(id)});
+    const user = await client.db("todo_users").collection("users").findOne({ _id: new ObjectId(id)});
     return user;
 }
 
 export async function getUserByUsername(client: MongoClient, username: string, ) {
-    const user = await client.db("cats").collection("users").findOne({ username });
+    const user = await client.db("todo_users").collection("users").findOne({ username });
     return user;
 }
 
@@ -32,7 +32,7 @@ export async function getUserByUsername(client: MongoClient, username: string, )
  */
 export async function createUser(client: MongoClient, username: string, password: string) {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await client.db("cats").collection("users").insertOne({ username, password: hashedPassword });
+    const user = await client.db("todo_users").collection("users").insertOne({ username, password: hashedPassword });
     console.log(
         `A document was inserted with the _id: ${user.insertedId}`,
     );
