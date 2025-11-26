@@ -79,7 +79,8 @@ passport.use(
 
 // Register (creates user)
 app.post("/register", (req: Request, res: Response) =>
-  createUserController(req, res),
+{    console.log("Register endpoint hit:", req.body);
+createUserController(req, res);}
 );
 
 // Log in
@@ -130,7 +131,7 @@ app.use(
 );
 
 // Start server
-const PORT = 3003;
+const PORT = 3002;
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
