@@ -1,0 +1,93 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4x 20px rgba(0, 0, 0, 0.15);
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+
+    h2 {
+        margin: 0 0 12px 0;
+    }
+
+    label {
+        font-weight: 500;
+        margin-top: 4px;
+    }
+
+    input, textarea {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: inherit;
+        font-size: 14px;
+    }
+
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: #000;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+}
+
+.buttonContainer {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    justify-content: space-between;
+}
+
+.cancel {
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    flex: 1;
+
+    &:hover {
+        background: #cc0000;
+    }
+}
+
+.submit {
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: #000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    flex: 1;
+  
+    &:hover {
+        background: #333;
+    }
+}

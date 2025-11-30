@@ -1,6 +1,28 @@
 import type { Request, Response } from "express";
-import { getTodo, createTodo, deleteTodo, updateTodo } from "../services/todosService.ts";
+import { getTodo, createTodo, deleteTodo, updateTodo, getAllTodos } from "../services/todosService.ts";
 
+export const getAllTodosController = async (req: Request, res: Response) => {
+  const client = req.app.locals.client;
+  try {
+    const todos = await getAllTodos(client); // <-- new function in your mongoService
+    res.status(200).json({
+      success: true,
+      data: todos,
+    });
+  } catch (e: unknown) {
+    if (e instanceof Error){
+        res.status(400).json({
+            success: false,
+            message: e.message,
+        });
+    } else {
+        res.status(400).json({
+            success: false,
+            message: "couldn't get error message",
+        });
+    }
+  }
+};
 
 /**
  * 

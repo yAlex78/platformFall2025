@@ -6,11 +6,27 @@
     border-radius: 12px;
     margin-bottom: 15px;
     background: white;
+    gap: 14px;
+    min-height: 80px;
+    align-items: center;
 }
 
 .left {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 18px;
+    flex: 1;
+}
+
+.todoInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    h3, p, span {
+        margin: 0; 
+        padding: 0; 
+    }
 }
 
 .date {
@@ -18,16 +34,34 @@
     color: #888;
 }
 
+.check {
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
+
 .icons {
     display: flex;
+    flex-direction: column;
+    margin: auto;
     gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 90px;
 
     button {
         background: none;
-        border: none;
+        border: 1px solid #ddd;
+        border-radius: 6px;
         cursor: pointer;
-        font-size: 18px;
+        font-size: 14px;
+        width: 100%;
+        transition: background 0.2s ease;
 
+        &:hover {
+            background: #bcbcbc;
+        }
+        
         &.delete {
             color: rgb(111, 30, 30);
         }
